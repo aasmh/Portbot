@@ -10,11 +10,12 @@ import os
 BOT_TOKEN = "MTA2MDYxMTI5MDM3ODI4OTE4NA.G0zNa4.uF_YwDi-nKVMmiSjsn7cWvKaVghSPD7a4nnQ54"
 CHANNEL_ID = 1049759266245980212
 
-
+#global var for the current number
 num = 0
 
     
-
+#function that gets the inport data
+    
 def getinport():
     # Set the URL of the website
     url = 'http://spsonlinealex.apa.gov.eg/SPS-web/faces/harbor/inquiries/inportships/SearchInPortShipsOnline.xhtml'
@@ -37,6 +38,8 @@ def getinport():
     time.sleep(2)
     driver.quit()
 
+###changes the name of the downloaded file
+    
 def chnme(number):
     os.chdir('/home/mod/desktop/downloads/existing')
     os.rename('tableData.xls',f'existing{number}.xls')
@@ -66,10 +69,14 @@ def chnmd(number):
     os.rename('tableData.xls',f'departing{number}.xls')
     os.chdir('/home/mod/desktop')
 
+##adds one to the txt file
+    
 def addone(number):
     file = open('/home/mod/desktop/file.txt','w')
     file.write(str(number))
     file.close()
+
+### checks the number in the txt file
 
 def readone():
     global num
@@ -80,12 +87,16 @@ def readone():
 
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
+
+###runs when the bot runs
 @bot.event
 async def on_ready():
     #print("Hello! Study bot is ready!")
     channel = bot.get_channel(CHANNEL_ID)
+    my_task.start()
     
 
+###runs the loop every 24 hours
 
 @tasks.loop(hours=24)
 async def my_task():
